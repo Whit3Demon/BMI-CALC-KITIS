@@ -5,22 +5,52 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import { Image } from "expo-image";
 
 const Home = () => {
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+
+  const [BMI, setBMI] = useState(0.0);
+
+  React.useEffect(() => {
+    //отрабатывает код внутри себя тогда когда изменяются значения в его квадратных скобках,
+    // есои там пусто - то он отрабатывает 1 раз в самом начале перед рендером экрана
+    setHeight("193");
+  }, []);
+
+  const handlerCalcBMI = () => {
+    const currentWeight = parseInt(weight);
+    const currentHeight = parseInt(height);
+
+    if (isNaN(currentWeight) || isNaN(currentHeight)) {
+      return;
+    }
+
+    const heightMetrs = currentHeight / 100;
+    setBMI(Number((currentWeight / (heightMetrs * heightMetrs)).toFixed(1)));
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>BMI Calculator</Text>
       <View style={styles.inputContainer}>
         <TextInput
+          value={height}
+          onChangeText={(value) => {
+            setHeight(value);
+          }}
           style={styles.input}
           placeholder="Heigth-M"
           placeholderTextColor={"rgba(90,90,190,1)"}
           keyboardType="number-pad"
         />
         <TextInput
+          value={weight}
+          onChangeText={(value) => {
+            setWeight(value);
+          }}
           style={styles.input}
           placeholder="Weigth-KG"
           placeholderTextColor={"rgba(90,90,190,1)"}
@@ -31,18 +61,23 @@ const Home = () => {
       <TouchableOpacity
         style={styles.goButton}
         onPress={() => {
-          console.log("GO");
+          handlerCalcBMI();
         }}
       >
         <Text style={styles.goButtonText}>Go</Text>
       </TouchableOpacity>
 
-      <Text style={styles.BMIText}>0.00</Text>
+      <Text style={styles.BMIText}>{BMI}</Text>
 
       <View style={styles.line} />
 
       <View style={styles.ColorContainer}>
-        <View style={styles.YellowBlock}>
+        <View
+          style={[
+            styles.YellowBlock,
+            BMI <= 18.5 && BMI >= 1 && { opacity: 1 },
+          ]}
+        >
           <Image
             style={styles.YellowImage}
             source={require("./assets/yellow.png")}
@@ -52,7 +87,9 @@ const Home = () => {
           <Text style={styles.noteText}>Under Weight</Text>
         </View>
 
-        <View style={styles.GreenBlock}>
+        <View
+          style={[styles.GreenBlock, BMI > 18.5 && BMI < 25 && { opacity: 1 }]}
+        >
           <Image
             style={styles.GreenImage}
             source={require("./assets/green.png")}
@@ -62,7 +99,7 @@ const Home = () => {
           <Text style={styles.noteText}>Under Weight</Text>
         </View>
 
-        <View style={styles.RedBlock}>
+        <View style={[styles.RedBlock, BMI >= 25 && { opacity: 1 }]}>
           <Image
             style={styles.RedImage}
             source={require("./assets/red.png")}
@@ -144,6 +181,8 @@ const styles = StyleSheet.create({
     width: 110,
 
     alignItems: "center",
+
+    opacity: 0.3,
   },
   GreenBlock: {
     backgroundColor: "green",
@@ -152,6 +191,8 @@ const styles = StyleSheet.create({
     width: 110,
 
     alignItems: "center",
+
+    opacity: 0.3,
   },
   RedBlock: {
     backgroundColor: "red",
@@ -160,6 +201,8 @@ const styles = StyleSheet.create({
     width: 110,
 
     alignItems: "center",
+
+    opacity: 0.3,
   },
   YellowImage: {
     width: 120,
