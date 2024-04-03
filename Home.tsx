@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import React from "react";
 
+import { Image } from "expo-image";
+
 const Home = () => {
   return (
     <View style={styles.container}>
@@ -36,6 +38,40 @@ const Home = () => {
       </TouchableOpacity>
 
       <Text style={styles.BMIText}>0.00</Text>
+
+      <View style={styles.line} />
+
+      <View style={styles.ColorContainer}>
+        <View style={styles.YellowBlock}>
+          <Image
+            style={styles.YellowImage}
+            source={require("./assets/yellow.png")}
+            contentFit="fill"
+          />
+          <Text style={styles.valueText}>Under 18</Text>
+          <Text style={styles.noteText}>Under Weight</Text>
+        </View>
+
+        <View style={styles.GreenBlock}>
+          <Image
+            style={styles.GreenImage}
+            source={require("./assets/green.png")}
+            contentFit="fill"
+          />
+          <Text style={styles.valueText}>Under 18</Text>
+          <Text style={styles.noteText}>Under Weight</Text>
+        </View>
+
+        <View style={styles.RedBlock}>
+          <Image
+            style={styles.RedImage}
+            source={require("./assets/red.png")}
+            contentFit="fill"
+          />
+          <Text style={styles.valueText}>Under 18</Text>
+          <Text style={styles.noteText}>Under Weight</Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -83,7 +119,65 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginTop: 40,
   },
+
+  line: {
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    height: 2,
+
+    marginTop: 100,
+  },
+
+  ColorContainer: {
+    flexDirection: "row",
+    gap: 15,
+
+    marginTop: 20,
+
+    paddingHorizontal: 15,
+  },
+
+  YellowBlock: {
+    backgroundColor: "yellow",
+    borderRadius: 15,
+    height: 300,
+    width: 110,
+
+    alignItems: "center",
+  },
+  GreenBlock: {
+    backgroundColor: "green",
+    borderRadius: 15,
+    height: 300,
+    width: 110,
+
+    alignItems: "center",
+  },
+  RedBlock: {
+    backgroundColor: "red",
+    borderRadius: 15,
+    height: 300,
+    width: 110,
+
+    alignItems: "center",
+  },
+  YellowImage: {
+    width: 120,
+    height: 70,
+    marginTop: 40,
+  },
+  GreenImage: {
+    width: 120,
+    height: 90,
+    marginTop: 20,
+  },
+  RedImage: {
+    width: 120,
+    height: 90,
+    marginTop: 20,
+  },
+  valueText: { fontSize: 15, fontWeight: "600", marginTop: 30 },
+  noteText: { fontSize: 15, fontWeight: "600", marginTop: 30 },
 });
 
 export default Home;
-//130 108 45

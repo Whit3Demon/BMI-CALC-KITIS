@@ -12,6 +12,7 @@
     "@expo/config": "^8.1.1",
     "@expo/metro-config": "^0.10.0",
     "expo": "~50.0.14",
+    "expo-image": "^1.10.6",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.6"
